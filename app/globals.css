@@ -1,0 +1,305 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Web Estúdio BR — tokens
+   Fonte única de verdade. Componentes e página só referenciam estes nomes.
+   Se um valor não está aqui, ele não entra no site: adicione o token primeiro.
+   ========================================================================== */
+:root {
+  /* Cor — um canvas quente, uma tinta, dois cinzas, um acento com duas variantes */
+  --canvas-top:     #FAFAF8;   /* topo do gradiente da página */
+  --canvas-bottom:  #F4F3EF;   /* base do gradiente da página */
+  --paper:          #FAFAF8;   /* superfície de cards; texto sobre escuro */
+  --ink:            #16181D;   /* texto principal, CTA */
+  --ink-soft:       #1D2027;   /* títulos secundários */
+  --muted:          #5C6069;   /* texto de apoio (≥ 4.5:1 sobre o canvas) */
+  --subtle:         #8B8F98;   /* só texto grande ou elementos não textuais */
+  --hairline:       rgba(22, 24, 29, 0.12);    /* fios finos sobre claro */
+  --accent:         #2F6FED;   /* o único azul: links, foco, momentos de ação */
+  --accent-hover:   #4C82FF;
+  --accent-deep:    #1E5AD6;   /* pressionado */
+  --surface-dark:   #0E0F12;   /* seção invertida (contato + rodapé) */
+  --surface-dark-2: #16181D;   /* painel sobre a superfície escura */
+  --muted-inverse:  #A3A7AF;   /* texto de apoio sobre escuro */
+  --hairline-inverse: rgba(255, 255, 255, 0.10);
+  --canvas-glass:   rgba(250, 250, 248, 0.88);  /* canvas translúcido da nav ao rolar */
+
+  /* Espaçamento — escala de 8 pontos. Nada entre esses valores. */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+
+  /* Raios — escalonados ao tamanho do elemento; piso de 8px */
+  --radius-input:   8px;
+  --radius-card:    12px;
+  --radius-card-lg: 16px;
+  --radius-button:  24px;
+  --radius-pill:    999px;
+
+  /* Tipografia — duas famílias */
+  --font-display: var(--font-fraunces, Georgia), Georgia, serif;
+  --font-body:    var(--font-inter, system-ui), system-ui, sans-serif;
+
+  /* Sombras — três níveis tingidos pela tinta + um brilho de acento */
+  --shadow-sm:   0 1px 2px   rgba(16, 18, 29, 0.06);
+  --shadow-md:   0 8px 24px  rgba(16, 18, 29, 0.10);
+  --shadow-lg:   0 20px 50px rgba(16, 18, 29, 0.16);
+  --shadow-glow: 0 0 30px    rgba(47, 111, 237, 0.30);
+
+  /* Movimento — um easing, duas faixas de duração */
+  --ease-signature: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-ui: .4s;
+  --dur-entrance: 1.2s;
+
+  /* Largura de leitura */
+  --measure: 64ch;
+}
+
+/* Expõe os tokens como utilitários do Tailwind (bg-ink, text-muted, font-display…) */
+@theme inline {
+  --color-canvas: var(--canvas-top);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-surface-dark: var(--surface-dark);
+  --color-surface-dark-2: var(--surface-dark-2);
+  --color-muted-inverse: var(--muted-inverse);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+
+  --ease-signature: var(--ease-signature);
+}
+
+/* ==========================================================================
+   Escala tipográfica — cada texto do site usa uma destas classes
+   ========================================================================== */
+.t-label  { font: 500 12px/1.3 var(--font-body); letter-spacing: 1px; text-transform: uppercase; }
+.t-small  { font: 400 14px/1.5 var(--font-body); }
+.t-nav    { font: 400 16px/1.4 var(--font-body); }
+.t-body   { font: 400 18px/1.5 var(--font-body); }
+.t-lead   { font: 400 20px/1.5 var(--font-body); }
+.t-h3     { font: 400 24px/1.2 var(--font-display); letter-spacing: -0.25px; }
+.t-h2     { font: 400 28px/1.1 var(--font-display); letter-spacing: -0.25px; }
+.t-h1     { font: 400 40px/1.0 var(--font-display); letter-spacing: -0.5px; }
+.t-stat   { font: 400 40px/1.0 var(--font-display); letter-spacing: -0.5px; }
+
+@media (min-width: 768px) {
+  .t-h3 { font-size: 28px; line-height: 1.1; }
+  .t-h2 { font-size: 40px; line-height: 1.05; letter-spacing: -0.5px; }
+  .t-h1 { font-size: 56px; line-height: 0.95; }
+  .t-stat { font-size: 56px; line-height: 0.95; }
+}
+
+.measure { max-width: var(--measure); }
+
+/* Marca na nav */
+.logo { font: 500 20px/1 var(--font-display); letter-spacing: -0.25px; }
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+html { scroll-behavior: smooth; }
+
+html { background: var(--canvas-bottom); }
+
+body {
+  background: linear-gradient(180deg, var(--canvas-top) 0%, var(--canvas-bottom) 100%) no-repeat;
+  background-size: 100% 100%;
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+::selection { background: var(--accent); color: var(--paper); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-input);
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-2);
+  top: -100px;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-input);
+}
+.skip-link:focus { top: var(--space-2); }
+
+/* ==========================================================================
+   Componentes — só tokens, nenhum valor cru
+   ========================================================================== */
+
+/* CTA primário — pílula de tinta, seta de acento, pressão scale(0.97) */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 48px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius-button);
+  padding: var(--space-2) var(--space-4);
+  font: 500 14px/1 var(--font-body);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform var(--dur-ui) var(--ease-signature),
+              box-shadow var(--dur-ui) var(--ease-signature);
+}
+.cta:hover  { box-shadow: var(--shadow-md); }
+.cta:active { transform: scale(0.97); }
+.cta .icon  { color: var(--accent-hover); transition: transform var(--dur-ui) var(--ease-signature); }
+.cta:hover .icon { transform: translate(2px, -2px); }
+.cta--sm { min-height: 44px; padding: var(--space-1) var(--space-3); }
+
+/* CTA de acento — usado uma vez, na seção escura, com o único brilho do site */
+.cta--accent { background: var(--accent); color: var(--paper); box-shadow: var(--shadow-glow); }
+.cta--accent:hover  { background: var(--accent-hover); box-shadow: var(--shadow-glow); }
+.cta--accent:active { background: var(--accent-deep); }
+.cta--accent .icon  { color: var(--paper); }
+
+/* Botão secundário — contorno de tinta */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 48px;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-button);
+  color: var(--ink);
+  font: 500 14px/1 var(--font-body);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color var(--dur-ui) var(--ease-signature),
+              transform var(--dur-ui) var(--ease-signature);
+}
+.btn-ghost:hover  { border-color: var(--ink); }
+.btn-ghost:active { transform: scale(0.97); }
+.btn-ghost--inverse { color: var(--paper); border-color: var(--hairline-inverse); }
+.btn-ghost--inverse:hover { border-color: var(--paper); }
+
+/* Chip — contorno de tinta que preenche com o acento no hover */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) var(--space-2);
+  font: 500 12px/1.3 var(--font-body);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--dur-ui) var(--ease-signature),
+              border-color var(--dur-ui) var(--ease-signature),
+              color var(--dur-ui) var(--ease-signature);
+}
+.chip:hover { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+/* Card — separado do canvas só pela sombra (ordem: preenchimento → sombra → borda) */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border-radius: var(--radius-card);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--dur-ui) var(--ease-signature);
+}
+.card:hover { box-shadow: var(--shadow-md); }
+.card--lg { border-radius: var(--radius-card-lg); }
+@media (min-width: 768px) { .card { padding: var(--space-4); } }
+
+.card .card-arrow { color: var(--subtle); transition: color var(--dur-ui) var(--ease-signature), transform var(--dur-ui) var(--ease-signature); }
+.card:hover .card-arrow { color: var(--accent); transform: translate(2px, -2px); }
+
+/* Link de texto — hover por opacidade, não por cor */
+.link { transition: opacity var(--dur-ui) var(--ease-signature); cursor: pointer; }
+.link:hover { opacity: 0.6; }
+.link--accent { color: var(--accent); }
+
+/* Tag estática (não clicável) */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) var(--space-2);
+  font: 500 12px/1.3 var(--font-body);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* Fio fino */
+.rule { border-top: 1px solid var(--hairline); }
+.rule-inverse { border-top: 1px solid var(--hairline-inverse); }
+
+/* Nav fixa — ganha fundo e fio fino ao rolar */
+.nav {
+  transition: background var(--dur-ui) var(--ease-signature),
+              box-shadow var(--dur-ui) var(--ease-signature);
+}
+.nav--scrolled {
+  background: var(--canvas-glass);
+  backdrop-filter: blur(var(--space-2));
+  box-shadow: 0 1px 0 var(--hairline);
+}
+
+/* Mock do catálogo — a superfície escura com fio fino de alpha */
+.mock {
+  background: var(--surface-dark);
+  border: 1px solid var(--hairline-inverse);
+  border-radius: var(--radius-card-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.mock-bar { border-bottom: 1px solid var(--hairline-inverse); }
+.mock-tile {
+  background: var(--surface-dark-2);
+  border: 1px solid var(--hairline-inverse);
+  border-radius: var(--radius-input);
+}
+.mock-tile--accent { border-color: var(--accent); }
+
+/* ==========================================================================
+   Movimento — reveal com fade + subida, escalonado
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity var(--dur-entrance) var(--ease-signature),
+              transform var(--dur-entrance) var(--ease-signature);
+}
+.reveal.is-in { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: .1s; }
+.reveal-d2 { transition-delay: .2s; }
+.reveal-d3 { transition-delay: .3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
